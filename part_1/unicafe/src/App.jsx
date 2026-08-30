@@ -23,22 +23,31 @@ const StatsComponent = ({good, neutral, bad}) => {
   const getAverage = () => ((good * goodFactor) + (neutral * neutralFactor) + (bad * badFactor)) / (getAllCount() || 1)
   const getPositivePercentage = () => good / (getAllCount() || 1)
 
+  let content = <p>No feedback given</p>
+  if (good > 0 || neutral > 0 || bad > 0) {
+    content = (
+      <>
+        <h1>statistics</h1>
+        <p>
+          good {good}
+          <br></br>
+          neutral {neutral}
+          <br></br>
+          bad {bad}
+          <br></br>
+          all {getAllCount()}
+          <br></br>
+          average {getAverage()}
+          <br></br>
+          positive {getPositivePercentage()} %
+        </p>
+      </>
+    )
+  }
+  
   return (
     <div>
-      <h1>statistics</h1>
-      <p>
-        good {good}
-        <br></br>
-        neutral {neutral}
-        <br></br>
-        bad {bad}
-        <br></br>
-        all {getAllCount()}
-        <br></br>
-        average {getAverage()}
-        <br></br>
-        positive {getPositivePercentage()} %
-      </p>
+      {content}
     </div>
   )
 }
