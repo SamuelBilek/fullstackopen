@@ -10,8 +10,17 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+  const isDuplicateName = (name) => {
+    return persons.map(person => person.name).includes(name)
+  }
+
   const handleNameSubmit = (event) => {
     event.preventDefault()
+    if (isDuplicateName(newName)) {
+      alert(`${newName} is already added to the phonebook`)
+      setNewName('')
+      return
+    }
     setPersons(persons.concat({name: newName}))
     setNewName('')
   }
