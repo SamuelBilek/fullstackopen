@@ -14,6 +14,15 @@ const FeedbackComponent = ({onGoodClick, onNeutralClick, onBadClick}) => {
   )
 }
 
+const StatisticsLine = ({text, value}) => {
+  return (
+    <>
+      <label>{text} {value}</label>
+      <br></br>
+    </>
+  )
+}
+
 const StatsComponent = ({good, neutral, bad}) => {
   const goodFactor = 1
   const neutralFactor = 0
@@ -27,19 +36,13 @@ const StatsComponent = ({good, neutral, bad}) => {
   if (good > 0 || neutral > 0 || bad > 0) {
     content = (
       <>
-        <h1>statistics</h1>
         <p>
-          good {good}
-          <br></br>
-          neutral {neutral}
-          <br></br>
-          bad {bad}
-          <br></br>
-          all {getAllCount()}
-          <br></br>
-          average {getAverage()}
-          <br></br>
-          positive {getPositivePercentage()} %
+          <StatisticsLine text='good' value={good} />
+          <StatisticsLine text='neutral' value={neutral} />
+          <StatisticsLine text='bad' value={bad} />
+          <StatisticsLine text='all' value={getAllCount()} />
+          <StatisticsLine text='average' value={getAverage()} />
+          <StatisticsLine text='positive' value={getPositivePercentage()} />
         </p>
       </>
     )
@@ -47,6 +50,7 @@ const StatsComponent = ({good, neutral, bad}) => {
   
   return (
     <div>
+      <h1>statistics</h1>
       {content}
     </div>
   )
