@@ -15,6 +15,14 @@ const FeedbackComponent = ({onGoodClick, onNeutralClick, onBadClick}) => {
 }
 
 const StatsComponent = ({good, neutral, bad}) => {
+  const goodFactor = 1
+  const neutralFactor = 0
+  const badFactor = -1
+
+  const getAllCount = () => good + neutral + bad
+  const getAverage = () => ((good * goodFactor) + (neutral * neutralFactor) + (bad * badFactor)) / (getAllCount() || 1)
+  const getPositivePercentage = () => good / (getAllCount() || 1)
+
   return (
     <div>
       <h1>statistics</h1>
@@ -24,6 +32,12 @@ const StatsComponent = ({good, neutral, bad}) => {
         neutral {neutral}
         <br></br>
         bad {bad}
+        <br></br>
+        all {getAllCount()}
+        <br></br>
+        average {getAverage()}
+        <br></br>
+        positive {getPositivePercentage()} %
       </p>
     </div>
   )
