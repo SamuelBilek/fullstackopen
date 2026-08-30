@@ -9,6 +9,16 @@ const getRandomInt = (max, exclude) => {
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
+const AnecdoteComponent = ({anecdote, vote}) => {
+  return (
+    <p>
+      {anecdote}
+      <br></br>
+      has {vote || 0} votes
+    </p>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -32,15 +42,31 @@ const App = () => {
     setVotes(updatedVotes)
   }
 
+  const getMostVotedAnecdoteIndex = () => {
+    if (anecdotes.length === 0) throw new Error('Anecdotes are empty!')
+    let maxVoteIdx = 0
+    let maxVoteCount = 0
+    for (let i=0; i < anecdotes.length; i++) {
+      let voteCount = votes[i.toString()]
+      if (voteCount && voteCount > maxVoteCount) {
+        maxVoteCount = voteCount
+        maxVoteIdx = i
+      }
+    }
+    return maxVoteIdx
+  }
+
+  let maxVoteIdx = getMostVotedAnecdoteIndex()
+
   return (
     <div>
-      <p>
-        {anecdotes[selected]}
-        <br></br>
-        has {votes[selected] || 0} votes
-      </p>
+      <h1>Anecdote of the day</h1>
+      <AnecdoteComponent anecdote={anecdotes[selected]} vote={votes[selected]} />
       <Button onClick={voteCurrentAnecdote} text='vote' />
       <Button onClick={() => setSelected(getRandomInt(anecdotes.length - 1, selected))} text='next anecdote' />
+      
+      <h1>Anecdote with most votes</h1>
+      <AnecdoteComponent anecdote={anecdotes[maxVoteIdx]} vote={votes[maxVoteIdx]} />
     </div>
   )
 }
