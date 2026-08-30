@@ -14,12 +14,12 @@ const FeedbackComponent = ({onGoodClick, onNeutralClick, onBadClick}) => {
   )
 }
 
-const StatisticsLine = ({text, value}) => {
+const StatsTableRow = ({text, value}) => {
   return (
-    <>
-      <label>{text} {value}</label>
-      <br></br>
-    </>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
@@ -36,14 +36,14 @@ const StatsComponent = ({good, neutral, bad}) => {
   if (good > 0 || neutral > 0 || bad > 0) {
     content = (
       <>
-        <p>
-          <StatisticsLine text='good' value={good} />
-          <StatisticsLine text='neutral' value={neutral} />
-          <StatisticsLine text='bad' value={bad} />
-          <StatisticsLine text='all' value={getAllCount()} />
-          <StatisticsLine text='average' value={getAverage()} />
-          <StatisticsLine text='positive' value={getPositivePercentage()} />
-        </p>
+        <table>
+          <StatsTableRow text='good' value={good} />
+          <StatsTableRow text='neutral' value={neutral} />
+          <StatsTableRow text='bad' value={bad} />
+          <StatsTableRow text='all' value={getAllCount()} />
+          <StatsTableRow text='average' value={getAverage()} />
+          <StatsTableRow text='positive' value={getPositivePercentage()} />
+        </table>
       </>
     )
   }
