@@ -1,7 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 
 let persons = [
     { 
@@ -27,6 +27,8 @@ let persons = [
 ]
 
 const app = express()
+
+app.use(express.static('dist'))
 
 app.use(express.json())
 
@@ -80,7 +82,7 @@ app.post('/api/persons/', (request, response) => {
     }
 
     const newPerson = {
-        id: getRandomPositiveInt(),
+        id: String(getRandomPositiveInt()),
         name: body.name,
         number: body.number
     }
@@ -109,6 +111,7 @@ app.delete('/api/persons/:id', (request, response) => {
     if (person) {
         persons = persons.filter(p => p.id !== id)
         response.status(204).end()
+        console.log(`Deleted ${person.name}`)
         return
     } else {
         response.status(404).json({
