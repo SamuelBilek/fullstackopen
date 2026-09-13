@@ -1,5 +1,5 @@
 {
-  "name": "part3",
+  "name": "backend",
   "version": "0.0.1",
   "description": "",
   "license": "MIT",
@@ -9,7 +9,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit --amend --no-edit && git push -f"
   },
   "dependencies": {
     "express": "^5.2.1"
