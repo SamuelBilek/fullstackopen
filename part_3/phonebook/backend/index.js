@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
+const Person = require('./models/person')
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 let persons = [
     { 
@@ -53,12 +55,10 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 })
-
-const getRandomPositiveInt = () => {
-    return Math.floor((Math.random() * (Number.MAX_SAFE_INTEGER - 0 + 1) + 0))
-}
 
 const isDupliciteName = name => {
     return persons.find(p => p.name === name) !== undefined
@@ -81,14 +81,14 @@ app.post('/api/persons/', (request, response) => {
         return
     }
 
-    const newPerson = {
-        id: String(getRandomPositiveInt()),
+    const newPerson = new Person({
         name: body.name,
         number: body.number
-    }
+    })
 
-    persons = persons.concat(newPerson)
-    response.json(newPerson)
+    newPerson.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
 app.get('/api/persons/:id', (request, response) => {
